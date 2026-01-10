@@ -28,6 +28,17 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
         colors: product?.colors || [],
     });
 
+    const [sizesInput, setSizesInput] = useState(product?.sizes?.join(", ") || "");
+    const [colorsInput, setColorsInput] = useState(product?.colors?.join(", ") || "");
+
+    const handleArrayInput = (field: 'sizes' | 'colors', value: string) => {
+        if (field === 'sizes') setSizesInput(value);
+        if (field === 'colors') setColorsInput(value);
+
+        const arr = value.split(',').map(item => item.trim()).filter(item => item !== '');
+        setFormData(prev => ({ ...prev, [field]: arr }));
+    };
+
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -126,6 +137,29 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
                             onChange={e => setFormData({ ...formData, description: e.target.value })}
                             className="bg-zinc-950 border-zinc-800 min-h-[100px]"
                         />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="sizes">Sizes (comma separated)</Label>
+                            <Input
+                                id="sizes"
+                                value={sizesInput}
+                                onChange={e => handleArrayInput('sizes', e.target.value)}
+                                placeholder="S, M, L, XL"
+                                className="bg-zinc-950 border-zinc-800"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="colors">Colors (comma separated)</Label>
+                            <Input
+                                id="colors"
+                                value={colorsInput}
+                                onChange={e => handleArrayInput('colors', e.target.value)}
+                                placeholder="Black, White, Red"
+                                className="bg-zinc-950 border-zinc-800"
+                            />
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
