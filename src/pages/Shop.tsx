@@ -1,36 +1,43 @@
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 
 const Shop = () => {
-  const products = [
-    {
-      name: "Black&Rhood Classic Tee",
-      price: "₦8,500",
-      colors: "Black, White, Grey",
-      sizes: "S, M, L, XL, XXL",
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=600&fit=crop",
-    },
-    {
-      name: "Signature Rhood Cap",
-      price: "₦5,000",
-      colors: "Black, Grey",
-      sizes: "One Size",
-      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&h=600&fit=crop",
-    },
-    {
-      name: "Premium Hoodie",
-      price: "₦12,000",
-      colors: "Black, Grey, White",
-      sizes: "S, M, L, XL, XXL",
-      image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=600&fit=crop",
-    },
-  ];
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("in_stock", true)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching products:", error);
+      } else {
+        const transformedProducts = data.map((p) => ({
+          name: p.name,
+          price: `₦${p.price.toLocaleString()}`,
+          colors: p.colors?.join(", ") || "N/A",
+          sizes: p.sizes?.join(", ") || "N/A",
+          image: p.image_url || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=600&fit=crop",
+        }));
+        setProducts(transformedProducts);
+      }
+      setLoading(false);
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
+
       <main className="flex-1">
         {/* Hero Section */}
         <section className="bg-primary text-primary-foreground py-16">
@@ -45,11 +52,21 @@ const Shop = () => {
         {/* Products Grid */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {products.map((product) => (
-                <ProductCard key={product.name} {...product} />
-              ))}
-            </div>
+            {loading ? (
+              <div className="flex justify-center items-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+              </div>
+            ) : products.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-xl text-muted-foreground">No products found.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {products.map((product) => (
+                  <ProductCard key={product.name} {...product} />
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>

@@ -1,38 +1,46 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 
 const Index = () => {
-  const featuredProducts = [
-    {
-      name: "Black&Rhood Classic Tee",
-      price: "₦8,500",
-      colors: "Black, White, Grey",
-      sizes: "S, M, L, XL, XXL",
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=600&fit=crop",
-    },
-    {
-      name: "Signature Rhood Cap",
-      price: "₦5,000",
-      colors: "Black, Grey",
-      sizes: "One Size",
-      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&h=600&fit=crop",
-    },
-    {
-      name: "Premium Hoodie",
-      price: "₦12,000",
-      colors: "Black, Grey, White",
-      sizes: "S, M, L, XL, XXL",
-      image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=600&fit=crop",
-    },
-  ];
+  const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("in_stock", true);
+
+      if (error) {
+        console.error("Error fetching featured products:", error);
+      } else if (data) {
+        // Pick 3 random products
+        const shuffled = [...data].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 3).map((p) => ({
+          name: p.name,
+          price: `₦${p.price.toLocaleString()}`,
+          colors: p.colors?.join(", ") || "N/A",
+          sizes: p.sizes?.join(", ") || "N/A",
+          image: p.image_url || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=600&fit=crop",
+        }));
+        setFeaturedProducts(selected);
+      }
+      setLoading(false);
+    };
+
+    fetchFeatured();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="bg-primary text-primary-foreground py-20 md:py-32">
         <div className="container mx-auto px-4 text-center">
@@ -60,9 +68,19 @@ const Index = () => {
             Featured Products
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.name} {...product} />
-            ))}
+            {loading ? (
+              <div className="col-span-full flex justify-center items-center py-12">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+              </div>
+            ) : featuredProducts.length === 0 ? (
+              <div className="col-span-full text-center py-12">
+                <p className="text-xl text-muted-foreground">Stay tuned for new arrivals!</p>
+              </div>
+            ) : (
+              featuredProducts.map((product) => (
+                <ProductCard key={product.name} {...product} />
+              ))
+            )}
           </div>
         </div>
       </section>
