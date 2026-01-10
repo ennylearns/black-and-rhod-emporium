@@ -7,7 +7,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
+
       <main className="flex-1">
         {/* Hero Section */}
         <section className="bg-primary text-primary-foreground py-16">
@@ -20,7 +20,7 @@ const Contact = () => {
         <section className="py-16">
           <div className="container mx-auto px-4 max-w-4xl">
             <p className="text-lg text-center mb-12">
-              Have questions? Want to place an order? We'd love to hear from you! 
+              Have questions? Want to place an order? We'd love to hear from you!
               Reach out through any of our channels below.
             </p>
 
@@ -36,7 +36,7 @@ const Contact = () => {
                 </p>
                 <Button asChild className="w-full">
                   <a
-                    href="https://wa.me/2348105319"
+                    href="https://wa.me/2348105319069"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -56,7 +56,7 @@ const Contact = () => {
                 </p>
                 <Button asChild className="w-full">
                   <a
-                    href="https://www.instagram.com/black_rhood01"
+                    href="https://www.instagram.com/black_rhood01?igsh=Y3VjNXp1ODY1NTJ6"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -78,7 +78,7 @@ const Contact = () => {
                 </p>
                 <Button asChild className="w-full">
                   <a
-                    href="https://www.tiktok.com/@blackrhood"
+                    href="https://vm.tiktok.com/ZSHETHwnXqDXH-bNbFC/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

@@ -30,7 +30,7 @@ const Footer = () => {
             <h4 className="font-bold mb-4">Connect With Us</h4>
             <div className="flex gap-4 mb-4">
               <a
-                href="https://wa.me/2348105319"
+                href="https://wa.me/2348105319069"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
@@ -38,7 +38,7 @@ const Footer = () => {
                 <MessageCircle className="h-6 w-6" />
               </a>
               <a
-                href="https://www.instagram.com/black_rhood01"
+                href="https://www.instagram.com/black_rhood01?igsh=Y3VjNXp1ODY1NTJ6"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
@@ -46,7 +46,7 @@ const Footer = () => {
                 <Instagram className="h-6 w-6" />
               </a>
               <a
-                href="https://www.tiktok.com/@blackrhood"
+                href="https://vm.tiktok.com/ZSHETHwnXqDXH-bNbFC/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
