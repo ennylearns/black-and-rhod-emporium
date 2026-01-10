@@ -12,6 +12,10 @@ import Shipping from "./pages/Shipping";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+import LoginPage from "./pages/admin/LoginPage";
+import DashboardPage from "./pages/admin/DashboardPage";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -28,6 +32,12 @@ const App = () => (
           <Route path="/payments" element={<Payments />} />
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/contact" element={<Contact />} />
+
+          <Route path="/admin/login" element={<LoginPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin/dashboard" element={<DashboardPage />} />
+          </Route>
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
