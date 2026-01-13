@@ -97,106 +97,112 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
 
     return (
         <Dialog open onOpenChange={onClose}>
-            <DialogContent className="max-w-2xl w-[95vw] max-h-[95vh] overflow-y-auto bg-zinc-900 border-zinc-800 text-zinc-100 p-6">
-                <DialogHeader>
+            <DialogContent className="max-w-2xl w-[95vw] max-h-[90vh] bg-zinc-900 border-zinc-800 text-zinc-100 p-0 flex flex-col overflow-hidden">
+                <DialogHeader className="px-6 pt-6 pb-4 shrink-0">
                     <DialogTitle className="text-xl font-bold">
                         {product ? "Edit Product" : "Add New Product"}
                     </DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-6 py-4 px-0">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="name">Product Name</Label>
-                            <Input
-                                id="name"
-                                value={formData.name}
-                                onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                required
-                                className="bg-zinc-950 border-zinc-800"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="price">Price (₦)</Label>
-                            <Input
-                                id="price"
-                                type="number"
-                                step="0.01"
-                                value={formData.price}
-                                onChange={e => setFormData({ ...formData, price: parseFloat(e.target.value) })}
-                                required
-                                className="bg-zinc-950 border-zinc-800"
-                            />
-                        </div>
-                    </div>
 
-                    <div className="space-y-2">
-                        <Label htmlFor="description">Description</Label>
-                        <Textarea
-                            id="description"
-                            value={formData.description}
-                            onChange={e => setFormData({ ...formData, description: e.target.value })}
-                            className="bg-zinc-950 border-zinc-800 min-h-[100px]"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="sizes">Sizes (comma separated)</Label>
-                            <Input
-                                id="sizes"
-                                value={sizesInput}
-                                onChange={e => handleArrayInput('sizes', e.target.value)}
-                                placeholder="S, M, L, XL"
-                                className="bg-zinc-950 border-zinc-800"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="colors">Colors (comma separated)</Label>
-                            <Input
-                                id="colors"
-                                value={colorsInput}
-                                onChange={e => handleArrayInput('colors', e.target.value)}
-                                placeholder="Black, White, Red"
-                                className="bg-zinc-950 border-zinc-800"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label>Product Image</Label>
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    className="bg-zinc-950 border-zinc-800 hover:bg-zinc-800 relative w-full sm:w-auto"
-                                    disabled={uploading}
-                                >
-                                    <input
-                                        type="file"
-                                        className="absolute inset-0 opacity-0 cursor-pointer"
-                                        onChange={handleImageUpload}
-                                        accept="image/*"
-                                    />
-                                    {uploading ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
-                                    {uploading ? "Uploading..." : "Upload Image"}
-                                </Button>
-                                {formData.image_url && (
-                                    <img src={formData.image_url} alt="Preview" className="h-12 w-12 sm:h-10 sm:w-10 object-cover rounded border border-zinc-800 shrink-0" />
-                                )}
+                <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                    <div className="px-6 overflow-y-auto flex-1 space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="name">Product Name</Label>
+                                <Input
+                                    id="name"
+                                    value={formData.name}
+                                    onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                    required
+                                    className="bg-zinc-950 border-zinc-800"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="price">Price (₦)</Label>
+                                <Input
+                                    id="price"
+                                    type="number"
+                                    step="0.01"
+                                    value={formData.price}
+                                    onChange={e => setFormData({ ...formData, price: parseFloat(e.target.value) })}
+                                    required
+                                    className="bg-zinc-950 border-zinc-800"
+                                />
                             </div>
                         </div>
-                        <div className="flex items-center gap-4 pt-2 md:pt-8">
-                            <Label htmlFor="in_stock">In Stock</Label>
-                            <Switch
-                                id="in_stock"
-                                checked={formData.in_stock}
-                                onCheckedChange={checked => setFormData({ ...formData, in_stock: checked })}
+
+                        <div className="space-y-2">
+                            <Label htmlFor="description">Description</Label>
+                            <Textarea
+                                id="description"
+                                value={formData.description}
+                                onChange={e => setFormData({ ...formData, description: e.target.value })}
+                                className="bg-zinc-950 border-zinc-800 min-h-[100px]"
                             />
                         </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="sizes">Sizes (comma separated)</Label>
+                                <Input
+                                    id="sizes"
+                                    value={sizesInput}
+                                    onChange={e => handleArrayInput('sizes', e.target.value)}
+                                    placeholder="S, M, L, XL"
+                                    className="bg-zinc-950 border-zinc-800"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="colors">Colors (comma separated)</Label>
+                                <Input
+                                    id="colors"
+                                    value={colorsInput}
+                                    onChange={e => handleArrayInput('colors', e.target.value)}
+                                    placeholder="Black, White, Red"
+                                    className="bg-zinc-950 border-zinc-800"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label>Product Image</Label>
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className="bg-zinc-950 border-zinc-800 hover:bg-zinc-800 relative w-full sm:w-auto"
+                                        disabled={uploading}
+                                    >
+                                        <input
+                                            type="file"
+                                            className="absolute inset-0 opacity-0 cursor-pointer"
+                                            onChange={handleImageUpload}
+                                            accept="image/*"
+                                        />
+                                        {uploading ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
+                                        {uploading ? "Uploading..." : "Upload Image"}
+                                    </Button>
+                                    {formData.image_url && (
+                                        <img src={formData.image_url} alt="Preview" className="h-12 w-12 sm:h-10 sm:w-10 object-cover rounded border border-zinc-800 shrink-0" />
+                                    )}
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4 pt-2 md:pt-8">
+                                <Label htmlFor="in_stock">In Stock</Label>
+                                <Switch
+                                    id="in_stock"
+                                    checked={formData.in_stock}
+                                    onCheckedChange={checked => setFormData({ ...formData, in_stock: checked })}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Extra padding at bottom for mobile scroll */}
+                        <div className="h-4"></div>
                     </div>
 
-                    <DialogFooter className="flex-col-reverse sm:flex-row gap-2">
+                    <DialogFooter className="px-6 py-4 border-t border-zinc-800 shrink-0 flex-col-reverse sm:flex-row gap-2">
                         <Button type="button" variant="ghost" onClick={onClose} className="hover:bg-zinc-800 w-full sm:w-auto">
                             Cancel
                         </Button>
