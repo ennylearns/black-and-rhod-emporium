@@ -103,8 +103,8 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
                         {product ? "Edit Product" : "Add New Product"}
                     </DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-6 py-4">
-                    <div className="grid grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-6 py-4 px-0">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="name">Product Name</Label>
                             <Input
@@ -116,7 +116,7 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="price">Price ($)</Label>
+                            <Label htmlFor="price">Price (₦)</Label>
                             <Input
                                 id="price"
                                 type="number"
@@ -139,7 +139,7 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
                         />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="sizes">Sizes (comma separated)</Label>
                             <Input
@@ -162,14 +162,14 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label>Product Image</Label>
-                            <div className="flex items-center gap-4">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="bg-zinc-950 border-zinc-800 hover:bg-zinc-800 relative"
+                                    className="bg-zinc-950 border-zinc-800 hover:bg-zinc-800 relative w-full sm:w-auto"
                                     disabled={uploading}
                                 >
                                     <input
@@ -182,11 +182,11 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
                                     {uploading ? "Uploading..." : "Upload Image"}
                                 </Button>
                                 {formData.image_url && (
-                                    <img src={formData.image_url} alt="Preview" className="h-10 w-10 object-cover rounded border border-zinc-800" />
+                                    <img src={formData.image_url} alt="Preview" className="h-12 w-12 sm:h-10 sm:w-10 object-cover rounded border border-zinc-800 shrink-0" />
                                 )}
                             </div>
                         </div>
-                        <div className="flex items-center gap-4 pt-8">
+                        <div className="flex items-center gap-4 pt-2 md:pt-8">
                             <Label htmlFor="in_stock">In Stock</Label>
                             <Switch
                                 id="in_stock"
@@ -196,11 +196,11 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
                         </div>
                     </div>
 
-                    <DialogFooter>
-                        <Button type="button" variant="ghost" onClick={onClose} className="hover:bg-zinc-800">
+                    <DialogFooter className="flex-col-reverse sm:flex-row gap-2">
+                        <Button type="button" variant="ghost" onClick={onClose} className="hover:bg-zinc-800 w-full sm:w-auto">
                             Cancel
                         </Button>
-                        <Button type="submit" className="bg-cyan-600 hover:bg-cyan-500 text-zinc-950 font-semibold" disabled={loading}>
+                        <Button type="submit" className="bg-cyan-600 hover:bg-cyan-500 text-zinc-950 font-semibold w-full sm:w-auto" disabled={loading}>
                             {loading && <Loader2 className="animate-spin h-4 w-4 mr-2" />}
                             {product ? "Update Product" : "Create Product"}
                         </Button>

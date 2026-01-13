@@ -48,8 +48,8 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-950 p-4">
-            <Card className="w-full max-w-md border-zinc-800 bg-zinc-900 text-zinc-100">
+        <div className="flex min-h-screen items-center justify-center bg-zinc-950 p-4 sm:p-8">
+            <Card className="w-full max-w-md border-zinc-800 bg-zinc-900 text-zinc-100 shadow-2xl">
                 <CardHeader className="space-y-1">
                     <CardTitle className="text-2xl font-bold tracking-tight">Admin Login</CardTitle>
                     <CardDescription className="text-zinc-400">
