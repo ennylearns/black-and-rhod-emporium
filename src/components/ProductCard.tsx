@@ -13,7 +13,7 @@ interface ProductCardProps {
 const ProductCard = ({ name, price, colors, sizes, image }: ProductCardProps) => {
   const handleOrder = () => {
     const message = encodeURIComponent(`Hi! I'd like to order the ${name} (${price})`);
-    window.open(`https://wa.me/2348105319?text=${message}`, "_blank");
+    window.open(`https://wa.me/2348105319069?text=${message}`, "_blank");
   };
 
   return (
