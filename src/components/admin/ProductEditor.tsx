@@ -97,7 +97,7 @@ const ProductEditor = ({ product, onClose, onSuccess }: ProductEditorProps) => {
 
     return (
         <Dialog open onOpenChange={onClose}>
-            <DialogContent className="max-w-2xl bg-zinc-900 border-zinc-800 text-zinc-100">
+            <DialogContent className="max-w-2xl w-[95vw] max-h-[95vh] overflow-y-auto bg-zinc-900 border-zinc-800 text-zinc-100 p-6">
                 <DialogHeader>
                     <DialogTitle className="text-xl font-bold">
                         {product ? "Edit Product" : "Add New Product"}
